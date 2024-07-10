@@ -2,13 +2,13 @@ package main
 
 import (
 	"context"
-	"github.com/nikki-dag/saas-nexus-bug-bash-api/service"
 	"log"
 	"os"
 	"time"
 
 	"go.temporal.io/sdk/client"
 
+	"github.com/nikki-dag/saas-nexus-bug-bash-api/service"
 	"github.com/temporalio/saas-nexus-bug-bash-service-consumer/app"
 )
 
@@ -33,7 +33,7 @@ func runWorkflow(c client.Client, workflow interface{}, args ...interface{}) {
 		TaskQueue: app.TaskQueue,
 	}
 
-	wr, err := c.ExecuteWorkflow(ctx, workflowOptions, workflow, args)
+	wr, err := c.ExecuteWorkflow(ctx, workflowOptions, workflow, args...)
 	if err != nil {
 		log.Fatalln("Unable to execute workflow", err)
 	}

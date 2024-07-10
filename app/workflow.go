@@ -14,7 +14,7 @@ func EchoCallerWorkflow(ctx workflow.Context, message string) (string, error) {
 	c := workflow.NewNexusClient(endpointName, service.BugBashServiceName)
 
 	fut := c.ExecuteOperation(ctx, service.EchoOperationName, service.EchoInput{Message: message}, workflow.NexusOperationOptions{})
-	var res string
+	var res service.EchoOutput
 
 	var exec workflow.NexusOperationExecution
 	if err := fut.GetNexusOperationExecution().Get(ctx, &exec); err != nil {
@@ -24,14 +24,14 @@ func EchoCallerWorkflow(ctx workflow.Context, message string) (string, error) {
 		return "", err
 	}
 
-	return res, nil
+	return res.Message, nil
 }
 
 func HelloCallerWorkflow(ctx workflow.Context, name string, language service.Language) (string, error) {
 	c := workflow.NewNexusClient(endpointName, service.BugBashServiceName)
 
 	fut := c.ExecuteOperation(ctx, service.HelloOperationName, service.HelloInput{Name: name, Language: language}, workflow.NexusOperationOptions{})
-	var res string
+	var res service.HelloOutput
 
 	var exec workflow.NexusOperationExecution
 	if err := fut.GetNexusOperationExecution().Get(ctx, &exec); err != nil {
@@ -41,5 +41,5 @@ func HelloCallerWorkflow(ctx workflow.Context, name string, language service.Lan
 		return "", err
 	}
 
-	return res, nil
+	return res.Message, nil
 }
